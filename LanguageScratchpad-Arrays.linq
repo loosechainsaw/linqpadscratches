@@ -3,13 +3,14 @@
 void Main()
 {
 	var a1 = new int[] { 1, 2, 3, 4, 5, 6 };
-	var a2 = new int[3, 2] { { 1, 2 }, { 3, 4 }, { 5, 6 } };;
-	
+	var a2 = new int[3, 2] { { 1, 2 }, { 3, 4 }, { 5, 6 } }; ;
+
 	a1.Dump();
 	a2.Dump();
-	
-	a1.Foldl(0, (x,y) => x + y).Dump();
-	
+
+	a1.Foldl(0, (x, y) => x + y).Dump();
+	a2.FoldlAllDimensions(0, (x,y) => x + y).Dump();
+
 }
 
 public static class RectangularArrayExtensions
@@ -18,8 +19,13 @@ public static class RectangularArrayExtensions
 	{
 		for (int i = 0; i < array.GetLength(0); ++i)
 		{
-
+			for (int j = 0; j < array.GetLength(1); ++j)
+			{
+				zero = f(zero, array[i, j]);
+			}
 		}
+		
+		return zero;
 	}
 }
 
@@ -31,7 +37,7 @@ public static class IterableExtensions
 		{
 			zero = f(zero, item);
 		}
-		
+
 		return zero;
 	}
 }
